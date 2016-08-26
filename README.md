@@ -18,5 +18,7 @@ optional arguments:
 ## TODO
 
 [ ] Change url and split out to config
+
 [ ] Use other sources as well
+
 [ ] Send email from script 
