@@ -1,5 +1,5 @@
 # MeetMail
-Python script to we do not have to manually write a meetup email each month
+Python script so we do not have to manually write a meetup email each month
 
 ## Usage
 usage: meet.py [-h] [-l LIMIT] [-i INPUT] [-o OUTPUT]
@@ -18,5 +18,7 @@ optional arguments:
 ## TODO
 
 [ ] Change url and split out to config
+
 [ ] Use other sources as well
+
 [ ] Send email from script 
