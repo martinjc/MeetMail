@@ -5,6 +5,10 @@ import argparse
 import requests
 import pyperclip
 
+from O365 import *
+
+import config
+
 months = []
 for i in range(1,13):
     months.append(datetime.date(2016, i, 1).strftime('%B'))
@@ -23,6 +27,7 @@ def generate_email(meetups, args):
     today = datetime.datetime.now()
     email_body = """Hello All,
     Welcome to the {0} edition of meetups in and around Cardiff. As usual, we will be heading to the PyDiff meetup as a school outing, but please let us know if there is a meetup you want a group to attend and we will try to organise it! Here is what we have this month and these meetups are only successful because fine people like yourselves keep the Cardiff dev community alive. \n See you there! \n \n """.format(months[today.month-1])
+    subject = "[Meetups] Events for {0}".format(months[today.month-1])
     for meetup in meetups:
         date = datetime.datetime.fromtimestamp(meetup['time'] / 1e3)
         meetup['time'] = date
@@ -43,6 +48,7 @@ def generate_email(meetups, args):
         print("Meetup email written to: {}".format(args.output))
     else:
         print(email_body)
+    return (subject,email_body)
 
 def write_meetup(email_body, meetup):
     email_body += "\n Name: {} \n".format(meetup['name'])
@@ -57,10 +63,17 @@ def write_meetup(email_body, meetup):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Using the meetup calendar to generate an email')
-    parser.add_argument('-l', '--limit', help='Limited to that month only', required=False, default=False)
+    parser.add_argument('-l', '--limit', help='Limited to that month only', required=False, action="store_true")
     parser.add_argument('-i','--input', help='Input file name',required=False)
     parser.add_argument('-o','--output',help='Output file name', required=False)
     parser.add_argument("-c", "--copy", help="Copy to clipboard", action="store_true")
     args = parser.parse_args()
     meetups = get_meetups(args.input)
-    generate_email(meetups, args)
+    subject, body  = generate_email(meetups, args)
+    auth = (config.uname, config.pwd)
+    m = Message(auth=auth)
+    m.setRecipients(["gwilliamsc@cardiff.ac.uk","encima@gmail.com"])
+    m.setSubject(subject)
+    m.setBody(body)
+    print(m.sendMessage())
+    print("email sent")
