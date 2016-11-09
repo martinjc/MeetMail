@@ -56,6 +56,7 @@ def write_meetup(email_body, meetup):
         venue = meetup['venue']['name']
     email_body += "Where: {}\n".format(venue)
     email_body += "When: {}\n".format(meetup['time'])
+    email_body += "Link: {}\n".format(meetup['link'])
     email_body += '----- \n'
     return email_body
 
@@ -69,6 +70,7 @@ if __name__ == '__main__':
     subject = "[Meetups] Events for {0}".format(months[today.month-1])
     print(subject)
     meetups = get_meetups(args.in_file)
+    print(meetups[0])
     if not args.in_file:
         body  = generate_email(meetups, args)
     else:
