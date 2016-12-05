@@ -30,9 +30,9 @@ def generate_email(meetups, args):
     email_body = ""
     if args.reminder:
         email_body += config.email_reminder.format(args.reminder.title())
+        meetups = [x for x in meetups if args.reminder.lower() in x['group']['name'].lower()]
     else:
         email_body += config.email_welcome.format(months[today.month-1])
-    meetups = [x for x in meetups if args.reminder.lower() in x['group']['name'].lower()]
     
     for meetup in meetups:
         date = datetime.datetime.fromtimestamp(meetup['time'] / 1e3)
@@ -56,8 +56,9 @@ def generate_email(meetups, args):
     return subject, email_body
 
 def write_meetup(email_body, meetup):
-    email_body += "\n Name: {} \n".format(meetup['name'])
-    email_body += "Meetup: {}\n".format(meetup['group']['name'])
+    print(meetup['name'])
+    email_body += "\n Name: {} \n".format(meetup['name'].encode('ascii', 'ignore'))
+    email_body += "Meetup: {}\n".format(meetup['group']['name'].encode('ascii', 'ignore'))
     venue = 'TBC'
     if 'venue' in meetup:
         venue = meetup['venue']['name']

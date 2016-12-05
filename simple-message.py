@@ -14,18 +14,13 @@ will attach the files or crash trying. (hopefully not the latter)
 e.g.: python simple-message.py that_file_you_want_but_could_only_ssh_in.jpg
 '''
 
-if len(argv) > 1:
-	if argv[1] == '/?':
-		print usage
-		exit()
-
 #get login credentials that will be needed to send the message.
-uname = raw_input('Enter your user name: ')
-password = getpass.getpass('Enter your password: ')
+uname = "gwilliamsc@cardiff.ac.uk" 
+password = "sunScreen4"
 auth = (uname,password)
 
 #get the address that the message is to be sent to.
-rec = raw_input('Reciving address: ')
+rec = "scm7cg@cardiff.ac.uk"
 
 #get the subject line.
 subject = raw_input('Subject line: ')
@@ -47,9 +42,11 @@ m.setBody(body)
 if len(argv) > 1:
 	for arg in argv[1:]:
 		a = Attachment(path=arg)
-		m.attachments.append(a)
+		# m.attachments.append(a)
 
 #send the message and report back.
-print 'Sending message...'
-print m.sendMessage()
+print(m.sendMessage())
+
+
+
 
