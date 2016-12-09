@@ -4,8 +4,9 @@ import operator
 import argparse
 import requests
 import pyperclip
-
-from O365 import *
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 import config
 
@@ -56,9 +57,8 @@ def generate_email(meetups, args):
     return subject, email_body
 
 def write_meetup(email_body, meetup):
-    print(meetup['name'])
-    email_body += "\n Name: {} \n".format(meetup['name'].encode('ascii', 'ignore'))
-    email_body += "Meetup: {}\n".format(meetup['group']['name'].encode('ascii', 'ignore'))
+    email_body += "\n Name: {} \n".format(meetup['name'])
+    email_body += "Meetup: {}\n".format(meetup['group']['name'])
     venue = 'TBC'
     if 'venue' in meetup:
         venue = meetup['venue']['name']
@@ -83,11 +83,15 @@ if __name__ == '__main__':
         body = meetups
     print(subject)
     print(body)
-    if args.email and "y" in raw_input("ready to send?").lower():
-        auth = (config.uname, config.pwd)
-        m = Message(auth=auth)
-        m.setRecipients(config.recs)
-        m.setSubject(subject)
-        m.setBody(body)
-        print(m.sendMessage())
+    if args.email and "y" in input("ready to send?").lower():
+        msg = MIMEText(body)
+        msg['Subject'] = subject
+        msg['From'] = config.uname 
+        msg['To'] = ", ".join(config.recs)
+        #msg.attach(MIMEText(body, 'html'))
+        mail = smtplib.SMTP('outlook.office365.com', 587)
+        mail.ehlo()
+        mail.starttls()
+        mail.login(config.uname, config.pwd)
+        print(mail.sendmail(config.uname, config.recs, msg.as_string()))
         print("email sent")
