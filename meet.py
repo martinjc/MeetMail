@@ -71,6 +71,7 @@ def write_meetup(email_body, meetup):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Using the meetup calendar to generate an email')
     parser.add_argument('-l', '--limit', help='Limited to that month only', required=False, action="store_true")
+    parser.add_argument('-d', '--dev', help='Testing purposes', required=False, action="store_true")
     parser.add_argument('-e', '--email', help='Send email straight to all the people!', required=False, action="store_true")
     parser.add_argument('-i','--in_file', help='Input file name',required=False)
     parser.add_argument('-o','--output',help='Output file name', required=False)
@@ -87,11 +88,16 @@ if __name__ == '__main__':
         msg = MIMEText(body)
         msg['Subject'] = subject
         msg['From'] = config.uname 
-        msg['To'] = ", ".join(config.recs)
-        #msg.attach(MIMEText(body, 'html'))
+        if args.dev:
+            msg['To'] = ", ".join(config.recs_dev)
+        else:
+            msg['To'] = ", ".join(config.recs)
         mail = smtplib.SMTP('outlook.office365.com', 587)
         mail.ehlo()
         mail.starttls()
         mail.login(config.uname, config.pwd)
-        print(mail.sendmail(config.uname, config.recs, msg.as_string()))
+        to_addr = config.bcc 
+        to_addr += config.recs if not args.dev else config.recs_dev
+        print("Sending to: {}".format(to_addr))
+        print(mail.sendmail(config.uname, to, msg.as_string()))
         print("email sent")
