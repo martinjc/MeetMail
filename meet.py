@@ -1,12 +1,10 @@
-import json
 import datetime
 import operator
 import argparse
 import requests
-import pyperclip
 import smtplib
 from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+# from email.mime.multipart import MIMEMultipart
 
 import config
 
@@ -99,5 +97,5 @@ if __name__ == '__main__':
         to_addr = config.bcc 
         to_addr += config.recs if not args.dev else config.recs_dev
         print("Sending to: {}".format(to_addr))
-        print(mail.sendmail(config.uname, to, msg.as_string()))
+        print(mail.sendmail(config.uname, to_addr, msg.as_string()))
         print("email sent")
