@@ -94,7 +94,7 @@ if __name__ == '__main__':
         mail.ehlo()
         mail.starttls()
         mail.login(config.uname, config.pwd)
-        to_addr = config.bcc 
+        to_addr = config.bcc
         to_addr += config.recs if not args.dev else config.recs_dev
         print("Sending to: {}".format(to_addr))
         print(mail.sendmail(config.uname, to_addr, msg.as_string()))

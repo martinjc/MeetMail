@@ -9,3 +9,5 @@ email_rem_close = """<ADIOS HERE>"""
 recs_dev = ["<YOUR EMAIL HERE>"]
 recs = []
 bcc = []
+smtp_server = "outlook.office365.com"
+smtp_port = 587
