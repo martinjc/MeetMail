@@ -31,8 +31,8 @@ class MeetApi:
         if self.reminder:
             self.msg += config.email_reminder.format(self.reminder.title())
             meetups = [x for x in self.meetups if self.reminder.lower() in x['group']['name'].lower()]
-        else:
-            self.msg += config.email_welcome.format(self.months[self.today.month-1])
+        # else:
+        #     self.msg += config.email_welcome.format(self.months[self.today.month-1])
 
         for meetup in self.meetups:
             date = datetime.datetime.fromtimestamp(meetup['time'] / 1e3)

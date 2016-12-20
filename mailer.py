@@ -1,15 +1,13 @@
-import config
-import smtplib
 from email.mime.text import MIMEText
+import smtplib
+import config
 
 class MeetMail:
+    """meet"""
 
     def __init__(self, body, subject):
-
         self.msg = MIMEText(body)
         self.subject = subject
-        self.to = config.recs
-        
 
     def send(self, uname, pwd):
         """authenticate with SMTP server and send email"""
