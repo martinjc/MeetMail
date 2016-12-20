@@ -5,7 +5,7 @@ import config
 
 class MeetApi:
 
-    def __init__(self, in_file = None, limit = True, reminder = None):
+    def __init__(self, in_file = None, limit = False, reminder = None):
         self.file = in_file
         self.meetups = self.get_meetups(in_file)
         self.months = []
@@ -27,13 +27,10 @@ class MeetApi:
         self.meetups.sort(key=operator.itemgetter('time'))
         self.msg = ""
         met = []
-        self.subject = "[Meetups] Events for {0}".format(self.months[today.month-1])
+        self.subject = "[Meetups] Events for {0}".format(self.months[self.today.month-1])
         if self.reminder:
-            self.msg += config.email_reminder.format(self.reminder.title())
-            meetups = [x for x in self.meetups if self.reminder.lower() in x['group']['name'].lower()]
-        # else:
-        #     self.msg += config.email_welcome.format(self.months[self.today.month-1])
-
+            self.meetups = [x for x in self.meetups if self.reminder.lower() in x['group']['name'].lower()]
+            self.subject = "[Meetups] Reminder for {} on {}".format(self.reminder.title(), self.meetups[0]['time'])
         for meetup in self.meetups:
             date = datetime.datetime.fromtimestamp(meetup['time'] / 1e3)
             meetup['time'] = date
@@ -41,12 +38,7 @@ class MeetApi:
             if (name not in met and not self.limit) or (name not in met and self.limit and date.month == self.today.month):
                 # add the name and not the meetup to allow different types of meetup from the same groupto be added
                 met.append(name)
-                self.add_meetup(meetup)
-        if self.reminder:
-            self.msg += config.email_rem_close
-            self.subject = "[Meetups] Reminder for {} on {}".format(self.reminder.title(), meetups[0]['time'])
-        else:
-            self.msg += config.email_close
+                self.add_meetup(meetup)        
         return (self.subject, self.msg)
 
     def add_meetup(self, meetup):
