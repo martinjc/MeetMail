@@ -22,5 +22,5 @@ if __name__ == "__main__":
     if args.dev:
         print(MSG)
     else:
-         MAILER.send(config.uname, config.pwd)
-       
+        MAILER.send(config.uname, config.pwd)
+
