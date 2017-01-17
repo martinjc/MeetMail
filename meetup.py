@@ -19,8 +19,10 @@ if __name__ == "__main__":
     MSG += config.email_rem_close if args.reminder else config.email_close
     
     MAILER = MeetMail(SUB, MSG)
-    if args.dev:
+    if args.dev and not args.email:
         print(MSG)
+    elif args.dev and args.email:
+        MAILER.send(config.uname, config.pwd, config.recs_dev)
     else:
-        MAILER.send(config.uname, config.pwd)
+        MAILER.send(config.uname, config.pwd, config.recs + config.bcc)
 
