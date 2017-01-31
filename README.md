@@ -2,7 +2,8 @@
 Python script so we do not have to manually write a meetup email each month
 
 ## Usage
-usage: meetup.py [-h] [-l LIMIT] [-i INPUT] [-o OUTPUT] [-f FILE_TO_ATTACH]
+usage: meetup.py [-h] [-l] [-d] [-e] [-i IN_FILE] [-a ADDITIONAL]
+                 [-r REMINDER] [-f FILES]
 
 Using the meetup calendar to generate an email
 
