@@ -26,8 +26,6 @@ if __name__ == "__main__":
     MSG += MEETUPS
     MSG += config.email_rem_close if args.reminder else config.email_close
 
-    print(args.files)
-
     mailer = MeetMail(config.uname, config.pwd, config.smtp_server, config.smtp_port)
 
     if args.dev:
