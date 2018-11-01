@@ -1,8 +1,16 @@
 
-Name: 'A speed tour on Google for Developers'
-Meetup: Google Developer Group
-Where: Creative Suite, Cardiff Central Library
-When: February 16th, 17:00 - 19:00
-Link: https://www.eventbrite.co.uk/e/google-developer-group-gdg-cardiff-february-tickets-31149828977?aff=es2
+Name: 'TBC'
+Meetup: PyDiff
+Where: T/0.31, School of Computer Science & Informatics
+When: 16th January 2018
+Link: http://pydiff.wales
 
  -----
+
+Name: 'Cyber Crime - the Regional Police Response'
+Meetup: BCS South Wales
+Where:
+(Swansea) NHS Wales Informatics Swansea Office, Technium 2 building Swansea,
+(Cardiff) Innovation Area, NHS Wales Informatics Service, Tŷ Glan-yr-Afon,
+When: 9th January 2018
+Link: http://www.bcs.org/content/ConWebDoc/58651
